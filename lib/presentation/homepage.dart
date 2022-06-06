@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news/presentation/widget/newscard.dart';
 import 'package:news/provider/newsprovider.dart';
 
@@ -31,8 +32,13 @@ class _HomePageState extends State<HomePage> {
           if (state is NewsLoaded) {
             newsList = state.queryResult.data?['news'];
             return ListView.builder(
-                itemCount: newsList.length,
+                itemCount: newsList.length + 1,
                 itemBuilder: (context, index) {
+                  if (!(index < newsList.length)) {
+                    return SizedBox(
+                      height: 15.h,
+                    );
+                  }
                   return NewsCard(
                       auther: newsList[index]['auther'],
                       imageURl: newsList[index]['urlToImage'],
@@ -40,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                       desription: newsList[index]['desription']);
                 });
           } else {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }

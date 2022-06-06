@@ -14,6 +14,13 @@ class NewsProvider {
     _client = GraphQLClient(
       cache: GraphQLCache(store: HiveStore()),
       link: httpLink,
+      defaultPolicies: DefaultPolicies(
+        mutate: Policies(fetch: FetchPolicy.networkOnly),
+        query: Policies(fetch: FetchPolicy.networkOnly),
+        subscribe: Policies(fetch: FetchPolicy.networkOnly),
+        watchMutation: Policies(fetch: FetchPolicy.networkOnly),
+        watchQuery: Policies(fetch: FetchPolicy.networkOnly),
+      ),
     );
   }
 
